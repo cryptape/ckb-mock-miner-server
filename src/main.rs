@@ -91,7 +91,7 @@ async fn main() {
 
     let mut rpc = MetaIoHandler::with_compatibility(jsonrpc_core::Compatibility::V2);
     let rpc_impl = MinerMockRpcImpl {
-        idx: Arc::new(Mutex::new(1)),
+        idx: Arc::new(Mutex::new(0)),
         mock_data: get_mock_data_by_path(mock_data_path.to_string()),
     };
     add_miner_mock_rpc_methods(&mut rpc, rpc_impl);
