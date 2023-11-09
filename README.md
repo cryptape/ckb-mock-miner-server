@@ -1,6 +1,9 @@
 # ckb-mock-miner
 
-Mock RPC server for CKB
+Mock Miner RPC server for CKB
+
+- get_block_template
+- submit_block
 
 ## Usage
 
