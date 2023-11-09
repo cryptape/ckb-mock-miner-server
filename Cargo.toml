@@ -1,0 +1,19 @@
+[package]
+name = "ckb-mock-miner-server"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+serde = "1.0.192"
+serde_json = "1.0.108"
+ckb-pow = "0.112.0-rc2"
+ckb-jsonrpc-types = "0.112.0-rc2"
+ckb-types = "0.112.0-rc2"
+jsonrpc-utils = { version = "0.2.3", features = ["server", "macros", "axum"] }
+async-trait = "0.1.74"
+jsonrpc-core = "18.0.0"
+tokio = { version = "1", features = ["full"] }
+axum = "0.6"
+clap = { version = "2.34.0" }
