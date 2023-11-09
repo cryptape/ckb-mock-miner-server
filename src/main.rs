@@ -80,7 +80,7 @@ async fn main() {
             .help("The address to bind the server to")
         )
         .arg(Arg::with_name("mock_data_path")
-            .short("m")
+            .short("p")
             .long("mock-data-path")
             .default_value("./mock.json")
             .help("Path to the mock data JSON file"))
