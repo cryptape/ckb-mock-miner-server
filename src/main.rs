@@ -1,5 +1,3 @@
-//! Example server with macros.
-
 mod mock_data;
 use clap::{App, Arg};
 
