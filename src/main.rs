@@ -1,5 +1,7 @@
 mod mock_data;
+
 use clap::{App, Arg};
+use std::process;
 
 use jsonrpc_core::{Error, ErrorCode, Value};
 
@@ -43,16 +45,19 @@ impl MinerMockRpc for MinerMockRpcImpl {
         // todo check work id ?
         let latest_idx = self.idx.lock().unwrap().clone();
         let idx = latest_idx % self.mock_data.len();
-        return match self.mock_data.get(idx).unwrap().verify_submit_block(block.clone()) {
+        let data = self.mock_data.get(idx).unwrap().clone();
+        return match data.verify_submit_block(block.clone()) {
             Ok(hash) => {
                 *self.idx.lock().unwrap() = latest_idx + 1;
-                println!("submit successful:{}", block.header.number.clone());
+                println!("case idx:{} submit_block successful", idx);
                 Ok(hash)
             }
             Err(err) => {
+                let case = data.case;
+                println!("case idx:{} submit_block failed, case:{} ,err:{}", idx, case, err);
                 Err(Error {
                     code: ErrorCode::ServerError(1i64),
-                    message: format!("{err:?}"),
+                    message: format!("case:{case:?},err:{err:?}"),
                     data: Some(Value::String(format!("{err:?}"))),
                 })
             }
@@ -61,9 +66,14 @@ impl MinerMockRpc for MinerMockRpcImpl {
 
     fn get_block_template(&self, bytes_limit: Option<Uint64>, proposals_limit: Option<Uint64>, max_version: Option<Version>) -> Result<BlockTemplate> {
         let current_idx = self.idx.lock().unwrap().clone();
-        println!("== get_block_template :{} ",current_idx);
+        if current_idx >= self.mock_data.len() {
+            println!("===  miner test successful ====");
+            process::exit(0);
+        }
         let idx = current_idx % self.mock_data.len();
-        return Ok(self.mock_data.get(idx).unwrap().get_block_temple.clone());
+        let data = self.mock_data.get(idx).unwrap().clone();
+        println!("case idx:{} get_block_template , case:{}", current_idx, data.case);
+        return Ok(data.get_block_temple.clone());
     }
 }
 
