@@ -11,6 +11,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct MockData {
+    pub case: String,
     pub get_block_temple: BlockTemplate,
     pub submit_block: Block,
 }
